@@ -1,0 +1,32 @@
+@import 'theme';
+
+header{
+  background-color: #1a1a1b;
+  margin: none;
+  width: 100%;
+  height: 90px;
+  color: $primary-color-text;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  position: sticky;
+  section#home{
+    height: 100%;
+    .img-container{
+      height: 100%;
+    }
+  }
+
+  section#search_bar{
+    font-size: larger;
+  }
+
+  section#user_menu{
+    display: flex;
+    justify-content: space-around;
+    align-items: center;
+    gap: 30px;
+    margin-right: 20px;
+    font-size: larger;
+  }
+}

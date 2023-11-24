@@ -1,0 +1,30 @@
+@import 'theme';
+body{
+  background-color: $background-color;
+  margin: 0;
+  color: white;
+}
+
+//Tal vez convenga crear uno para width y otro para haight
+
+.img-responsive{
+  display: block;
+  max-height: 100%;
+  max-width: 100%;
+  height: 100%;
+}
+
+.button{
+  border-radius: 10px;
+  background-color: $button-color;
+  color: black;
+  padding: 5px 20px;
+  text-decoration: none;
+  border: none;
+}
+.button:hover{
+  transition: all .3s ease-in-out;
+  transform: translateY(-3px);
+  background-color: $button-color-dark;
+  cursor: pointer;
+}

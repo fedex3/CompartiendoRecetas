@@ -1,0 +1,29 @@
+section#register{
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+  gap: 30px;
+  font-size: larger;
+  form{
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+    gap: 30px;
+    
+    background-color: #1a1a1b;
+    padding: 20px;
+    border-radius: 10px;
+    .field{
+      display: flex;
+      flex-direction: column;
+      justify-content: center;
+      align-items: center;
+      gap: 4px;
+      input{
+        min-width: 300px;
+      }
+    }
+  }
+}

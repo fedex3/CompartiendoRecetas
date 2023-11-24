@@ -1,0 +1,16 @@
+<header>
+  <section id="home">
+    <div class="img-container">
+      <a href="/">
+        <%= image_tag 'Logo', class:"img-responsive", alt:"Compartiendo Recetas" %>
+      </a>
+     </div> 
+  </section>
+  <section id="search_bar">
+    <p>This is a search bar</p>
+  </section>
+  <section id="user_menu">
+    <%= link_to 'Iniciar Sesión', new_user_session_path , class:"button"%>
+    <%= link_to 'Registarse', new_user_registration_path , class:"button"%>
+  </section>
+</header>
