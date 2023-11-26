@@ -1,0 +1,11 @@
+@import 'theme';
+
+.notice{
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  background-color: $button-color;
+  color: black;
+  margin-top: 0;
+  margin-bottom: 10px;
+}

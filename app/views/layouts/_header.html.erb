@@ -9,8 +9,15 @@
   <section id="search_bar">
     <p>This is a search bar</p>
   </section>
-  <section id="user_menu">
-    <%= link_to 'Iniciar Sesión', new_user_session_path , class:"button"%>
-    <%= link_to 'Registarse', new_user_registration_path , class:"button"%>
-  </section>
+  <% if !user_signed_in? %>
+    <section id="user_menu_not_logged_in">
+      <%= link_to 'Iniciar Sesión', new_user_session_path , class:"button"%>
+      <%= link_to 'Registarse', new_user_registration_path , class:"button"%>
+    </section>
+  <%else%>
+    <section id="user_menu_logged_in">
+      <%= link_to 'Admin', root_path , class:"button"%>
+      <%= button_to "Sign out", destroy_user_session_path, :method => :delete,  class:"button"%>
+    </section>
+  <%end%>
 </header>

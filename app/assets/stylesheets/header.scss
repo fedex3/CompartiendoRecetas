@@ -18,15 +18,33 @@ header{
   }
 
   section#search_bar{
-    font-size: larger;
+    font-size: large;
   }
 
-  section#user_menu{
+  section#user_menu_not_logged_in{
     display: flex;
     justify-content: space-around;
     align-items: center;
     gap: 30px;
     margin-right: 20px;
-    font-size: larger;
+    font-size: large;
+  }
+
+  section#user_menu_logged_in{
+    display: flex;
+    justify-content: space-around;
+    align-items: center;
+    gap: 30px;
+    margin-right: 20px;
+    a{
+      font-size: large;
+      font-family: 'Times New Roman', Times, serif;
+      font-weight: 400;
+    }
+    button{
+      font-size: large;
+      font-family: 'Times New Roman', Times, serif;
+      font-weight: 400;
+    }
   }
 }
