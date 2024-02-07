@@ -1,0 +1,46 @@
+@import 'theme';
+//Index
+section#recipes_index{
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  flex-direction: column;
+  a{
+    text-decoration: none;
+    div.recipe_card{
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      flex-direction: column;
+      width: 400px;
+      background-color: $my-gray-color;
+      border: 1px solid rgb(87, 86, 86);
+      border-radius: 5px;
+      margin: 2em;
+      color: white;
+      img{
+        padding: 5px;
+      }
+    }
+  }
+}
+
+//Show
+
+section#recipes_show{
+  display: flex;
+  justify-content: space-around;
+
+  div#primary_column{
+    max-width: 50%;
+  }
+  div#secondary_column{
+    max-width: 40%;
+  }
+}
+
+//New
+
+.invisible-form{
+  display: none;
+}

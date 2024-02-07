@@ -12,4 +12,12 @@ Rails.application.routes.draw do
   #devise_for :users, controllers: {
   #  sessions: 'users/sessions'
   #}
+
+  resources :recipes
+
+  post 'search', to: 'search#index', as: 'search'
+  post 'search/suggestions', to: 'search#suggestions', as: 'search_suggestions'
+
+  get '/ingredients', to: 'ingredients#index'
+
 end

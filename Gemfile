@@ -79,11 +79,18 @@ group :test do
   gem "selenium-webdriver"
 end
 
+gem 'searchkick'
+gem 'elasticsearch', '~>7.17'
+gem 'faker'
+gem 'foreman', github:'ddollar/foreman'
+
+
+
 
 #Quiero agregar ActionText
 
 
-#gem 'bootstrap-tagsinput-rails'
+
 
 #gem 'wice_grid', git: 'https://bitbucket.org/sesocio/wice_grid_maxter.git', tag: '4.1.1'
 #gem 'countries', '~> 3.0', '>= 3.0.1'

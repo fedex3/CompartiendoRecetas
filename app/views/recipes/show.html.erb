@@ -1,0 +1,27 @@
+<section id="recipes_show">
+  <div id="primary_column">
+    <h1><%=@recipe.name%></h1>
+    <h3>Lista de ingredientes:</h3>
+    <ul>
+      <% unless @recipe.ingredients.blank? %>
+        <%@recipe.ingredients.each do |ingredient|%>
+          <li><%=ingredient.name%></li>
+        <% end %>
+      <% end %>
+    </ul>
+
+    <h3>Tiempo de preparación</h3>
+    <h3>Instrucciones:</h3>
+    <p><%=@recipe.detail%></p>
+
+  </div>
+
+  <div id="secondary_column">
+    <h3>Nombre del autor: <%=@user.name%></h3>
+    <h3>Galería de imágenes</h3>
+    <%unless @recipe.image.blank?%>
+      <%= image_tag @recipe.image, class:"img-responsive" %>
+    <%end%>
+  </div>
+  
+</section>

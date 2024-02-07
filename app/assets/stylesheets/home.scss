@@ -7,5 +7,26 @@
   background-color: $button-color;
   color: black;
   margin-top: 0;
-  margin-bottom: 10px;
+  margin-bottom: 0;
+  font-size: larger;
+  //margin-bottom: 10px;
+}
+
+.alert{
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  background-color: $button-color;
+  color: black;
+  margin-top: 0;
+  margin-bottom: 0;
+  font-size: larger;
+  //margin-bottom: 10px;
+}
+
+.center-section{
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
 }

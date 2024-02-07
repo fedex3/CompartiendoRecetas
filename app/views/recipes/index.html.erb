@@ -1,0 +1,15 @@
+Recetas
+
+<section id="recipes_index">
+  <% @recipes.each do |recipe| %>
+    <a href="<%= recipe_path(recipe) %>">
+      <div class="recipe_card">
+          <h3><%=recipe.name%></h3>
+          <%unless recipe.image.blank?%>
+            <%= image_tag recipe.image, class:"img-responsive" %>
+          <%end%>
+          <p><%=recipe.detail%></p>
+      </div>
+    </a>
+  <%end%>
+</section>

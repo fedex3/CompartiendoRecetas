@@ -1,0 +1,9 @@
+<% if results.any?%>
+  <div>
+    <%results.each do |ingredient|%>
+      <div>
+        <%= link_to ingredient.name, ingredient %>
+      </div>
+    <% end %>
+  </div>
+<% end %>

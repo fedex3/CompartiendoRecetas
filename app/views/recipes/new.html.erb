@@ -1,0 +1,42 @@
+<h1>New Recipe</h1>
+
+<%= form_with model: @recipe do |form| %>
+  <div>
+    <%= form.label :name %><br>
+    <%= form.text_field :name %>
+  </div>
+
+  <div>
+    <%= form.label :detail %><br>
+    <%= form.text_area :detail %>
+  </div>
+
+  
+  <div>
+    <%= form.label :image %><br>
+    <%= form.file_field :image %>
+  </div>
+
+
+
+  <div data-controller="recipe">
+    <%= form.label :ingredients %><br>
+    <div class="skills text-center">
+      <div class="user-skills">
+        <%= form.text_field :ingredients, :placeholder => "Buscar ingredientes",  :class => 'form-control multiple-input'%>
+        <%# select_tag "ingredients", options_from_collection_for_select(@ingredients, "id", "name"), {class:"invisible-form", :multiple => true, :size => 6} %>
+
+      </div>
+    </div>
+    <div id="ingredients_list">
+      <%= render 'ingredients/index', ingredients: @ingredients %>
+    </div>
+  </div>
+
+
+
+
+  <div>
+    <%= form.submit "Crear receta",  class:"button", data: { disable_with: "Creando receta" }%>
+  </div>
+<% end %>
