@@ -2,6 +2,10 @@ document.addEventListener('DOMContentLoaded', function(){
   let elem = document.getElementById('recipe_ingredients')
   elem.addEventListener("input", debounce(searchFunction, 1000));
   
+  //let addedIngredientsList = document.getElementById('added-ingredients-list')
+  //addedIngredientsList.addEventListener("click", debounce(addIngredientToList, 1000));
+
+  
 
   function searchFunction(){
     let searchQuery = this.value
@@ -10,19 +14,18 @@ document.addEventListener('DOMContentLoaded', function(){
       headers: {}
     };
     let url = `/ingredients?by_q=${searchQuery}`
-  
-  
-  
     fetch(url, options)
     .then(response => response.json())
     .then(data => {
       let list = document.getElementById('ingredients_list')
       list.innerHTML = ""
       data.forEach(element => {
-        list.innerHTML += `<p>${element}</p>`;
+        list.innerHTML += `<li onclick="addIngredientToList(this)" class="ingredient-element" data-id="${element[1]}">${element[0]}</li>`;
       });
     })
   }
+
+  
 });
 
 function debounce(fn, delay) {
@@ -38,3 +41,4 @@ function debounce(fn, delay) {
       }, delay || 250);
   };
 }
+

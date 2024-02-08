@@ -1,12 +1,14 @@
 class IngredientsController < ApplicationController
   def index
     if params[:by_q].present?
-      @ingredients = Ingredient.by_q(params[:by_q])
-      #@ingredients = Ingredient.where("lower(name) LIKE ? OR lower(detail) LIKE ?", "%#{params[:by_q]}%", "%#{params[:by_q]}%")
+      @ingredients = Ingredient.by_q_init(params[:by_q]).first(10)
+      if @ingredients.count < 10
+        @ingredients += Ingredient.by_q_any(params[:by_q]).first(10 - @ingredients.count)
+      end
     else
-      @ingredients = Ingredient.all
+      @ingredients = Ingredient.first(10)
     end
 
-    render json: @ingredients.pluck(:name)   
+    render json: @ingredients.pluck(:name, :id)   
   end
 end

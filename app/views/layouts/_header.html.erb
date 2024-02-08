@@ -17,8 +17,9 @@
   <%else%>
     <section id="user_menu_logged_in">
       <%= link_to 'Admin', root_path , class:"button"%>
-      <p>Recetas</p>
-      <p>Ingredientes</p>
+      <p>Mis Recetas</p>
+      <%= link_to 'Nueva Receta', new_recipe_path, class:"button"%>
+      <p>Mis Ingredientes</p>
       <%= button_to "Sign out", destroy_user_session_path, :method => :delete,  class:"button"%>
     </section>
   <%end%>

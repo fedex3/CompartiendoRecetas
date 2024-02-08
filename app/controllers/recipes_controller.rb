@@ -1,5 +1,5 @@
 class RecipesController < ApplicationController
-  before_action :authenticate_user! , only: %i[new]
+  #before_action :authenticate_user! , only: %i[new]
 
   def index
     @recipes = Recipe.all
@@ -7,28 +7,40 @@ class RecipesController < ApplicationController
 
   def show
     @recipe = Recipe.find(params[:id])
-    @user = User.find(@recipe.users_id)
+    @user = User.find(@recipe.user_id)
     
   end
 
   def new
     @recipe = Recipe.new
-    @ingredients = Ingredient.all
+    @ingredients = []
     @user = current_user
+    @recipe = current_user.recipes.build
+
+    puts "hola"
   end
 
   def edit
   end
 
   def create
-    @recipe = Recipe.new(recipe_params)
-    @recipe.users_id = current_user.id
-    @ingredients = Ingredient.where(:id => params[:ingredients])
-    @recipe.ingredients << @ingredients
+    #if recipe_params.ingredients.empty?
+    puts("|||||||||||||||||||||||||||||||||||")
+
+
+    #puts(recipe_params)
+    @recipe = Recipe.new(recipe_params.except(:ingredients))
+    puts current_user
+    @recipe.user_id = current_user.id
+    @recipe = current_user.recipes.build(recipe_params.except(:ingredients))
+    #if recipe_params
+    #@ingredients = Ingredient.where(:id => recipe_params[:ingredients])
+    #@recipe.ingredients << @ingredients
 
     if @recipe.save
       redirect_to @recipe
     else
+      puts @recipe.errors.full_messages
       render :new, status: :unprocessable_entity
     end
   end
@@ -43,7 +55,7 @@ class RecipesController < ApplicationController
   private
   
     def recipe_params
-      params.require(:recipe).permit(:name, :detail, :cooking_time, :cooking_time_unit, :users_id, :image, :ingredients)
+      params.require(:recipe).permit(:name, :detail, :cooking_time, :cooking_time_unit, :user_id, :image, :ingredients)
     end
 
     #def companies

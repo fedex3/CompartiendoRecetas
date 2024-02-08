@@ -6,7 +6,7 @@ class CreateRecipes < ActiveRecord::Migration[7.1]
       t.float :cooking_time
       t.string :cooking_time_unit
 
-      t.references :users, index: true, foreign_key: true
+      t.references :user, index: true, foreign_key: true
       
       t.datetime :deleted_at
       t.timestamps

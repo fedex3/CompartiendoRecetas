@@ -20,4 +20,7 @@ Rails.application.routes.draw do
 
   get '/ingredients', to: 'ingredients#index'
 
+  #get '/ingredients/list'
+
+
 end

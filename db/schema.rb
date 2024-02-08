@@ -45,6 +45,7 @@ ActiveRecord::Schema[7.1].define(version: 2023_11_28_093845) do
   create_table "ingredients", force: :cascade do |t|
     t.string "name", limit: 200, null: false
     t.string "detail", limit: 20000
+    t.index ["name", "detail"], name: "idx_alphabetic", opclass: :text_pattern_ops
   end
 
   create_table "ingredients_recipes", id: false, force: :cascade do |t|
@@ -61,11 +62,11 @@ ActiveRecord::Schema[7.1].define(version: 2023_11_28_093845) do
     t.text "detail"
     t.float "cooking_time"
     t.string "cooking_time_unit"
-    t.bigint "users_id"
+    t.bigint "user_id"
     t.datetime "deleted_at"
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
-    t.index ["users_id"], name: "index_recipes_on_users_id"
+    t.index ["user_id"], name: "index_recipes_on_user_id"
   end
 
   create_table "users", force: :cascade do |t|
@@ -85,5 +86,5 @@ ActiveRecord::Schema[7.1].define(version: 2023_11_28_093845) do
 
   add_foreign_key "active_storage_attachments", "active_storage_blobs", column: "blob_id"
   add_foreign_key "active_storage_variant_records", "active_storage_blobs", column: "blob_id"
-  add_foreign_key "recipes", "users", column: "users_id"
+  add_foreign_key "recipes", "users"
 end
