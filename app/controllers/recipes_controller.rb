@@ -25,14 +25,24 @@ class RecipesController < ApplicationController
 
   def create
     #if recipe_params.ingredients.empty?
-    puts("|||||||||||||||||||||||||||||||||||")
-
-
-    #puts(recipe_params)
-    @recipe = Recipe.new(recipe_params.except(:ingredients))
-    puts current_user
+    new_params = recipe_params.except(:ingredients,:ingredients_ids)
+    @recipe = Recipe.new(new_params)
     @recipe.user_id = current_user.id
-    @recipe = current_user.recipes.build(recipe_params.except(:ingredients))
+    ingredients_ids_list = recipe_params[:ingredients_ids].to_s.split(',')
+    puts("|||||||||||||||||||||||||||||||||||")
+    puts ingredients_ids_list.empty?.to_s
+    unless ingredients_ids_list.empty?
+      puts "Entra"
+      @ingredients = Ingredient.where(:id => ingredients_ids_list)
+      @recipe.ingredients << @ingredients
+      new_params[:ingredients] = @recipe.ingredients
+    else
+      puts "Esta receta no tiene ingredientes"
+    end
+    
+    
+    puts @recipe.ingredients
+    @recipe = current_user.recipes.build(new_params)
     #if recipe_params
     #@ingredients = Ingredient.where(:id => recipe_params[:ingredients])
     #@recipe.ingredients << @ingredients
@@ -55,7 +65,7 @@ class RecipesController < ApplicationController
   private
   
     def recipe_params
-      params.require(:recipe).permit(:name, :detail, :cooking_time, :cooking_time_unit, :user_id, :image, :ingredients)
+      params.require(:recipe).permit(:name, :detail, :cooking_time, :cooking_time_unit, :user_id, :image, :ingredients, :ingredients_ids)
     end
 
     #def companies
