@@ -7,20 +7,24 @@ Rails.application.routes.draw do
   get "up" => "rails/health#show", as: :rails_health_check
 
   # Defines the root path route ("/")
-  root to: "home#index"
+  root to: "recipes#index"
 
   #devise_for :users, controllers: {
   #  sessions: 'users/sessions'
   #}
 
   resources :recipes
+  resources :ingredients
 
   post 'search', to: 'search#index', as: 'search'
   post 'search/suggestions', to: 'search#suggestions', as: 'search_suggestions'
 
-  get '/ingredients', to: 'ingredients#index'
+  #get '/ingredients', to: 'ingredients#index'
 
+  get '/my-recipes', to: 'recipes#mine'
   #get '/ingredients/list'
+
+  #get 'ingredients/new', to: 'ingredients#new'
 
 
 end

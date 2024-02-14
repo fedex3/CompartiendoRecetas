@@ -85,4 +85,89 @@
   function removeIngredientFromList(ingredient){
     ingredient.parentNode.outerHTML = '';
   }
+
+  function addIngredientToDataBase(){
+    let ingredient = document.getElementById('recipe_ingredients').value
+
+    let options = {
+      method: 'GET',      
+      headers: {}
+    };
+    let url = `/ingredients/new?query=${ingredient}`
+    fetch(url, options)
+    .then(response => response.json())
+    .then(data => {
+      let list = document.getElementById('ingredients_list')
+      list.innerHTML = ""
+      console.log(data)
+      if(data.length>0){
+        if(data[0]=="false"){
+          list.innerHTML += `${ingredient} no es considerado un ingrediente o una comida`;
+        }
+        else{
+          setTimeout(() => {
+            list.innerHTML += `Ingrediente agregado a nuestra base de datos\nDanos unos segundos mientras la actualizamos`;
+          }, 1000);
+          setTimeout(() => {
+            list.innerHTML = `3`;
+          }, 1000);
+          setTimeout(() => {
+            list.innerHTML = `2`;
+          }, 1000);
+          setTimeout(() => {
+            list.innerHTML = `1`;
+          }, 1000);
+          setTimeout(searchFunction, 1000);
+        }
+      }
+      else{
+        list.innerHTML += '<p>No devolvió data el fetch</p>'
+      }
+    })
+  }
+
+  let elem = document.getElementById('recipe_ingredients')
+  elem.addEventListener("input", debounce(searchFunction, 1000));
+  
+  //let addedIngredientsList = document.getElementById('added-ingredients-list')
+  //addedIngredientsList.addEventListener("click", debounce(addIngredientToList, 1000));
+
+  function searchFunction(){
+    let elem2 = document.getElementById('recipe_ingredients')
+    let searchQuery = elem2.value
+    let options = {
+      method: 'GET',      
+      headers: {}
+    };
+    let url = `/ingredients?by_q=${searchQuery}`
+    fetch(url, options)
+    .then(response => response.json())
+    .then(data => {
+      let list = document.getElementById('ingredients_list')
+      list.innerHTML = ""
+      if(data.length>0){
+        data.forEach(element => {
+          list.innerHTML += `<li onclick="addIngredientToList(this)" class="ingredient-element" data-id="${element[1]}">${element[0]}</li>`;
+        });
+      }
+      else{
+        list.innerHTML += '<p>No pudimos encontrar ese ingrediente</p><p onclick="addIngredientToDataBase()">¿Queres agregarlo a nuestra base de datos de ingredientes?</p>'
+      }
+    })
+  }
+
+
+  function debounce(fn, delay) {
+  var timeout;
+
+  return function () {
+      var context = this,
+          args = arguments;
+
+      clearTimeout(timeout);
+      timeout = setTimeout(function () {
+          fn.apply(context, args);
+      }, delay || 250);
+  };
+}
 </script>

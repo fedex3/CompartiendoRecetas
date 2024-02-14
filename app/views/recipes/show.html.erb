@@ -1,23 +1,26 @@
 <section id="recipes_show">
   <div id="primary_column">
     <h1><%=@recipe.name%></h1>
-    <h3>Lista de ingredientes:</h3>
-    <ul>
-      <% unless @recipe.ingredients.blank? %>
-        <%@recipe.ingredients.each do |ingredient|%>
-          <li><%=ingredient.name%></li>
-        <% end %>
-      <% end %>
-    </ul>
+    <%puts @recipe.inspect%>
 
-    <h3>Tiempo de preparación</h3>
+      <% unless @recipe.ingredients.blank? %>
+        <h3>Lista de ingredientes:</h3>
+        <ul>
+          <%@recipe.ingredients.each do |ingredient|%>
+            <li><%=ingredient.name.downcase.capitalize()%></li>
+          <% end %>
+        </ul>
+      <% end %>
+
+
+    <h3>Tiempo de preparación: </h3>
     <h3>Instrucciones:</h3>
-    <p><%=@recipe.detail%></p>
+    <p><%#@recipe.detail%><%= @recipe.ingredients.inspect%></p>
 
   </div>
 
   <div id="secondary_column">
-    <h3>Nombre del autor: <%=@user.name%></h3>
+    <h3>Receta de: <%=@user.name%></h3>
     <h3>Galería de imágenes</h3>
     <%unless @recipe.image.blank?%>
       <%= image_tag @recipe.image, class:"img-responsive" %>

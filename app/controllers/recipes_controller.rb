@@ -5,10 +5,13 @@ class RecipesController < ApplicationController
     @recipes = Recipe.all
   end
 
+  def mine
+    @recipes = current_user.recipes
+  end
+
   def show
-    @recipe = Recipe.find(params[:id])
+    @recipe = Recipe.includes(:ingredients).find(params[:id])
     @user = User.find(@recipe.user_id)
-    
   end
 
   def new
@@ -16,8 +19,6 @@ class RecipesController < ApplicationController
     @ingredients = []
     @user = current_user
     @recipe = current_user.recipes.build
-
-    puts "hola"
   end
 
   def edit
@@ -29,10 +30,7 @@ class RecipesController < ApplicationController
     @recipe = Recipe.new(new_params)
     @recipe.user_id = current_user.id
     ingredients_ids_list = recipe_params[:ingredients_ids].to_s.split(',')
-    puts("|||||||||||||||||||||||||||||||||||")
-    puts ingredients_ids_list.empty?.to_s
     unless ingredients_ids_list.empty?
-      puts "Entra"
       @ingredients = Ingredient.where(:id => ingredients_ids_list)
       @recipe.ingredients << @ingredients
       new_params[:ingredients] = @recipe.ingredients
@@ -40,8 +38,6 @@ class RecipesController < ApplicationController
       puts "Esta receta no tiene ingredientes"
     end
     
-    
-    puts @recipe.ingredients
     @recipe = current_user.recipes.build(new_params)
     #if recipe_params
     #@ingredients = Ingredient.where(:id => recipe_params[:ingredients])
@@ -63,7 +59,6 @@ class RecipesController < ApplicationController
   end
 
   private
-  
     def recipe_params
       params.require(:recipe).permit(:name, :detail, :cooking_time, :cooking_time_unit, :user_id, :image, :ingredients, :ingredients_ids)
     end
