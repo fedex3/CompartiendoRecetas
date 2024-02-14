@@ -29,14 +29,35 @@ section#recipes_index{
 
 section#recipes_show{
   display: flex;
-  justify-content: space-around;
+  justify-content: center;
+  gap: 2em;
+  margin: 2em;
+  
 
   div#primary_column{
     max-width: 50%;
+    min-width: 40%;
+    background-color: $my-gray-color;
+    border-radius: 15px;
+    padding: 1em;
+    h1{
+      font: larger;
+    }
   }
+
   div#secondary_column{
-    max-width: 40%;
+    max-width: 30%;
+    min-width: 20%;
+    background-color: $my-gray-color;
+    border-radius: 15px;
+    padding: 1em;
   }
+
+
+
+
+
+
 }
 
 //New

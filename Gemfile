@@ -79,10 +79,13 @@ group :test do
   gem "selenium-webdriver"
 end
 
-gem 'searchkick'
-gem 'elasticsearch', '~>7.17'
-gem 'faker'
-gem 'foreman', github:'ddollar/foreman'
+gem 'openai'
+gem 'httparty'
+
+#gem 'searchkick'
+#gem 'elasticsearch', '~>7.17'
+#gem 'faker'
+#gem 'foreman', github:'ddollar/foreman'
 
 
 
