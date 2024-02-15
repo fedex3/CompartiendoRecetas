@@ -18,6 +18,7 @@ Rails.application.routes.draw do
 
   post 'search', to: 'search#index', as: 'search'
   post 'search/suggestions', to: 'search#suggestions', as: 'search_suggestions'
+  get 'ai_recipe', to: 'recipes#ai_recipe'
 
   #get '/ingredients', to: 'ingredients#index'
 

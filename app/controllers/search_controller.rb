@@ -5,9 +5,10 @@ class SearchController < ApplicationController
       format.turbo_stream do
         redner turbo_stream:
         turbo_stream.update("ingredients", partial: "ingredients/index", locals: {ingredients: @results})
+      end
     end
   end
-end
+
 
   private
     def search_for_ingredients
@@ -17,3 +18,4 @@ end
         Ingredient.search(params[:query], fields: %i[name detail], operator: "or", match: :text_middle)
       end
     end
+end

@@ -21,6 +21,10 @@
 
   <div id="secondary_column">
     <h3>Receta de: <%=@user.name%></h3>
+    <% if @allow_edit %>
+      <%= link_to 'Editar', edit_recipe_path(@recipe), :class => "text" %>
+    <% end %>
+      
     <h3>Galería de imágenes</h3>
     <%unless @recipe.image.blank?%>
       <%= image_tag @recipe.image, class:"img-responsive" %>
