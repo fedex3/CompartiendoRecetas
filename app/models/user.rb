@@ -5,4 +5,6 @@ class User < ApplicationRecord
          :recoverable, :rememberable, :validatable
 
   has_many :recipes
+
+  validates :name, length: { minimum: 1, message: "Nombre muy corto"}
 end
