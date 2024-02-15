@@ -66,13 +66,15 @@ section#recipes_show{
   display: none;
 }
 
-#new-recipe-section{
+#recipe-form-section{
   display: flex;
   flex-direction: column;
   justify-content: center;
   align-items: center;
   gap: 30px;
   font-size: larger;
+  min-width: 300px;
+  margin-bottom: 3em;
   form{
     display: flex;
     flex-direction: column;
@@ -83,6 +85,11 @@ section#recipes_show{
     background-color: #1a1a1b;
     padding: 20px;
     border-radius: 10px;
+
+    .add-photo-button{
+      cursor: pointer;
+      
+    }
     .field{
       display: flex;
       flex-direction: column;
