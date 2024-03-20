@@ -46,5 +46,67 @@ header{
       font-family: 'Times New Roman', Times, serif;
       font-weight: 400;
     }
+
+    #user_menu_logged_in_dropdown {
+      display: none; /* Initially hide the dropdown */
+      width: 150px; /* Set a fixed width for the dropdown */
+      position: absolute;
+      top: 100%;
+      right: 0;
+      background-color: $my-gray-color;
+      //border: 1px solid #ccc;
+      border-radius: 0 0 15px 15px;
+      padding: 5px;
+      z-index: 1;
+      box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+      animation-duration: 0.5s;
+      .button{
+
+        display: block; /* Make the buttons block elements */
+        padding: 10px; /* Add padding for spacing */
+        text-align: center; /* Center the text */
+        text-decoration: none; /* Remove underline */
+        color: #333; /* Text color */
+        margin-bottom: 5px;
+        //width: 100%;
+      }
+      form .button{
+        width: 100%;
+      }
+    }
+    
+    #user_menu_logged_in_dropdown.show {
+      display: block;
+      animation-name: fadeIn;
+    }
+    /* Add a delay to the fade-out animation */
+    #user_menu_logged_in_dropdown:not(.show) {
+      animation-name: fadeOut;
+      animation-fill-mode: forwards;
+      animation-delay: 0.5s; /* Delay the animation to match the fade-in duration */
+    }
+  }
+}
+
+/* Animación para el dropdown */
+@keyframes fadeIn {
+  from {
+    opacity: 0;
+    transform: translateY(-10px);
+  }
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
+
+@keyframes fadeOut {
+  from {
+    opacity: 1;
+    transform: translateY(0);
+  }
+  to {
+    opacity: 0;
+    transform: translateY(-10px);
   }
 }

@@ -13,7 +13,23 @@ Rails.application.routes.draw do
   #  sessions: 'users/sessions'
   #}
 
-  resources :recipes
+  resources :recipes do
+    post 'like', to: 'likes#create', as: :like
+    delete 'unlike', to: 'likes#destroy', as: :unlike
+    post 'save', to: 'saves#create', as: :save
+    delete 'remove_from_saved', to: 'saves#destroy', as: :remove_from_saved
+  end
+
+  get	'/perfil', to:	'users#show', as: 'user_profile'
+  get	'/perfil/edit', to:	'users#edit', as:'edit_user'
+  put '/perfil', to:	'users#update'
+
+  resources 'perfil', controller: "users"
+
+ # get 'mis-ingredientes', to: 'pantry_items#index'
+  #post 'mis-ingredientess/new'
+  resources "mis_ingredientes", controller: "pantry_items"
+
   resources :ingredients
 
   post 'search', to: 'search#index', as: 'search'

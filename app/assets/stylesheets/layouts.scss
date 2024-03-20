@@ -3,11 +3,10 @@ body{
   background-color: $background-color;
   margin: 0;
   color: white;
-  font-size: larger;
+  font-size: 19px;
 }
 
 //Tal vez convenga crear uno para width y otro para haight
-
 .img-responsive{
   display: block;
   max-height: 100%;
@@ -27,5 +26,42 @@ body{
   transition: all .3s ease-in-out;
   transform: translateY(-3px);
   background-color: $button-color-dark;
+  cursor: pointer;
+}
+.squared-button{
+  border-radius: 6px;
+  background-color: $button-color;
+  color: black;
+  padding: 5px;
+  text-decoration: none;
+  border: none;
+}
+.squared-button:hover{
+  transition: all .3s ease-in-out;
+  transform: translateY(-3px);
+  background-color: $button-color-dark;
+  cursor: pointer;
+}
+
+.hidden{
+  display: none;
+}
+//Para íconos
+.fa-05x{
+    font-size: 0.7em;
+}
+
+.cancel-button{
+  border-radius: 10px;
+  background-color: $cancel-button-color;
+  color: black;
+  padding: 5px 20px;
+  text-decoration: none;
+  border: none;
+}
+.cancel-button:hover{
+  transition: all .3s ease-in-out;
+  transform: translateY(-3px);
+  background-color: $cancel-button-color-dark;
   cursor: pointer;
 }

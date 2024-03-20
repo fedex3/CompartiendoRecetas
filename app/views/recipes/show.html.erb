@@ -1,7 +1,12 @@
 <section id="recipes_show">
   <div id="primary_column">
     <h1><%=@recipe.name%></h1>
-    <%puts @recipe.inspect%>
+
+    <% unless @recipe.tags.blank? %>
+      <%@recipe.tags.each do |tag|%>
+        <span><%=tag.name.downcase.capitalize()%></span>
+      <% end %>
+    <% end %>
 
       <% unless @recipe.ingredients.blank? %>
         <h3>Lista de ingredientes:</h3>
@@ -12,21 +17,25 @@
         </ul>
       <% end %>
 
-
     <h3>Tiempo de preparación: </h3>
     <h3>Instrucciones:</h3>
-    <p><%#@recipe.detail%><%= @recipe.ingredients.inspect%></p>
+    <p><%=@recipe.detail%></p>
 
   </div>
 
   <div id="secondary_column">
     <h3>Receta de: <%=@user.name%></h3>
     <% if @allow_edit %>
-      <%= link_to 'Editar', edit_recipe_path(@recipe), :class => "text" %>
+      <%= link_to 'Editar', edit_recipe_path(@recipe), :class => "button" %>
+      <br>
+      <br>
+      <%= button_to "Delete Recipe", recipe_path(@recipe), method: :delete, data: { confirm: "Are you sure you want to delete this recipe?" }, class: "button", onclick: "return confirm('¿Estás seguro que querés eliminar esta receta?');" %>  
     <% end %>
-      
-    <h3>Galería de imágenes</h3>
+    
+    <%= render 'shared/like_form', recipe: @recipe %>
+    
     <%unless @recipe.image.blank?%>
+      <h3>Galería de imágenes</h3>
       <%= image_tag @recipe.image, class:"img-responsive" %>
     <%end%>
   </div>

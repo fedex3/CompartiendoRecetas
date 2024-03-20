@@ -1,0 +1,25 @@
+<section id="sharing-section">
+  <% if user_signed_in? %>
+    <% if current_user.liked_recipes.include?(@recipe) %>
+      <%= form_with(url: recipe_unlike_path(@recipe), method: :delete, class: "like-form") do |form| %>
+        <%= form.submit "Ya no me gusta", class: "button", style: "font-size: 19px; font-family: 'Times New Roman', Times, serif;" %>
+      <% end %>
+    <% else %>
+      <%= form_with(url: recipe_like_path(@recipe), method: :post, class: "like-form") do |form| %>
+        <%= form.submit "Me gusta", class: "button", style: "font-size: 19px; font-family: 'Times New Roman', Times, serif;" %>
+      <% end %>
+    <% end %>
+
+    <% if current_user.saved_recipes.include?(@recipe) %>
+      <%= form_with(url: recipe_remove_from_saved_path(@recipe), method: :delete, class: "save-form") do |form| %>
+        <%= form.submit "Dejar de guardar receta", class: "button", style: "font-size: 19px; font-family: 'Times New Roman', Times, serif;" %>
+      <% end %>
+    <% else %>
+      <%= form_with(url: recipe_save_path(@recipe), method: :post, class: "save-form") do |form| %>
+        <%= form.submit "Guardar receta", class: "button", style: "font-size: 19px; font-family: 'Times New Roman', Times, serif;" %>
+      <% end %>
+    <% end %>
+  <% else %>
+    <p><%= link_to "Inicia sesión", new_user_session_path %> para darle me gusta o guardar receta.</p>
+  <% end %>
+</section>

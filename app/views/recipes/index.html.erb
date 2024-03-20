@@ -1,4 +1,4 @@
-Recetas
+<!--Recetas-->
 
 <section id="recipes_index">
   <% @recipes.each do |recipe| %>
@@ -7,6 +7,8 @@ Recetas
           <h3><%=recipe.name%></h3>
           <%unless recipe.image.blank?%>
             <%= image_tag recipe.image, class:"img-responsive" %>
+            <% else %>
+            <%= image_tag "placeholder-recipe-image-compressed", class:"img-responsive" %>
           <%end%>
           <p><%=recipe.detail%></p>
       </div>

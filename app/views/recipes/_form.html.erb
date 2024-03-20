@@ -1,54 +1,62 @@
+<%= javascript_include_tag 'recipes_form', defer: true %>
 <section id="recipe-form-section">
-  <h1>New Recipe</h1>
+  <h1>Nueva Receta</h1>
   <div class="horizontal-flex">
     <%= form_with model: @recipe do |form| %>
       <div class="field">
         <%= form.label :name %><br>
         <%= form.text_field :name %>
       </div>
-
       <div class="field">
         <%= form.label :detail %><br>
-        <%= form.text_area :detail %>
+        <%= form.text_area :detail, size: "50x20" %>
       </div>
-
-
       <div class="field">
         <%= form.label :cooking_time %><br>
         <%= form.text_field :cooking_time %>
       </div>
-
       <div class="field">
         <%= form.label :image do %>
           <%= image_tag 'picture_image', class: "img-responsive add-photo-button", alt: "Agregar foto", size:"130x130" %>
         <% end %>
         <%= form.file_field :image, style: "display: none;" %>
       </div>
-
       <div data-controller="recipe">
-        <%= form.label :ingredients %><br>
         <div class="skills text-center">
           <div class="user-skills field">
-            <%= form.text_field :ingredients, :placeholder => "Buscar ingredientes",  :class => 'form-control multiple-input'%>
             <% if action_name == "new"%>
               <%= form.hidden_field :ingredients_ids%>
             <% elsif action_name == "edit"%>
               <%= form.hidden_field :ingredients_ids, value: @recipe.ingredients.pluck(:id)%>
             <%end%>
-
           </div>
         </div>
-        <div id="ingredients_list">
-          <%# render 'ingredients/index', ingredients: @ingredients %>
+        <div id="tags_list">
+          <%=select_tag "tags", options_from_collection_for_select(@tags, "id", "name"), multiple: true, :include_blank => true%>
         </div>
       </div>
-
       <div>
-        <%= form.submit "Crear receta",  class:"button", data: { disable_with: "Creando receta" }%>
+        <%puts action_name%>
+        <% if action_name == "new"%>
+          <%= form.submit "Crear receta",  class:"button", data: { disable_with: "Creando receta" }%>
+        <% else %>
+          <%= form.submit "Editar receta",  class:"button", data: { disable_with: "Editando receta" }%>
+        <% end %>
       </div>
     <% end %>
     <section id="add-ingredients-tab">
+      <%= form_with model: @recipe do |form| %>
       <h3>Ingredients</h3>
+      <div data-controller="recipe">
+        <%= form.label :ingredients %><br>
+        <div class="skills text-center">
+          <div class="user-skills field">
+            <%= form.text_field :ingredients, :placeholder => "Buscar ingredientes",  :class => 'form-control multiple-input'%>
+          </div>
+        </div>
+        <div id="ingredients_list">
+        </div>
+      </div>
       <ul id="added-ingredients-list">
         <% unless @recipe.ingredients.empty? %>
           <% @recipe.ingredients.each do |ingredient| %>
@@ -59,6 +67,7 @@
           <% end %>
         <% end %>
       </ul>
+    <% end %>
     </section>
   </div>
   <div>
@@ -66,125 +75,3 @@
     <%= link_to 'Crear receta con inteligencia artificial', ai_recipe_path, class:"button" %>
   </div>
 </section>
-
-
-<script>
-  function addIngredientToList(ingredient){
-    if (checkIngredientWasntAddedBefore(ingredient)){
-      console.log("El ingrediente ya se había seleccionado");
-    }
-    else{
-      let addedIngredientsList = document.getElementById('added-ingredients-list');
-      let ids_list = document.getElementById('recipe_ingredients_ids')
-      console.log(ids_list)
-      ids_list.value += `${ingredient.dataset.id},`;
-
-      addedIngredientsList.innerHTML += `<li data-idadded="${ingredient.dataset.id}">${ingredient.innerText}<span onclick="removeIngredientFromList(this)">x</span></li>`;
-    }
-  }
-
-  function checkIngredientWasntAddedBefore(ingredient){
-    let flag = false;
-    let addedIngredientsList = document.getElementById('added-ingredients-list');
-    let addedIngredients = document.querySelectorAll('#added-ingredients-list li');
-
-    Array.from(addedIngredients).forEach(addedIngredients => {
-      if(addedIngredients.dataset.idadded == ingredient.dataset.id ){
-        flag = true
-      }
-      console.log(addedIngredients.dataset.idadded);
-      console.log(ingredient.dataset.id);
-      
-    });
-    return flag;
-  }
-
-  function removeIngredientFromList(ingredient){
-    ingredient.parentNode.outerHTML = '';
-  }
-
-  function addIngredientToDataBase(){
-    let ingredient = document.getElementById('recipe_ingredients').value
-
-    let options = {
-      method: 'GET',      
-      headers: {}
-    };
-    let url = `/ingredients/new?query=${ingredient}`
-    fetch(url, options)
-    .then(response => response.json())
-    .then(data => {
-      let list = document.getElementById('ingredients_list')
-      list.innerHTML = ""
-      console.log(data)
-      if(data.length>0){
-        if(data[0]=="false"){
-          list.innerHTML += `${ingredient} no es considerado un ingrediente o una comida`;
-        }
-        else{
-          setTimeout(() => {
-            list.innerHTML += `Ingrediente agregado a nuestra base de datos\nDanos unos segundos mientras la actualizamos`;
-          }, 1000);
-          setTimeout(() => {
-            list.innerHTML = `3`;
-          }, 1000);
-          setTimeout(() => {
-            list.innerHTML = `2`;
-          }, 1000);
-          setTimeout(() => {
-            list.innerHTML = `1`;
-          }, 1000);
-          setTimeout(searchFunction, 1000);
-        }
-      }
-      else{
-        list.innerHTML += '<p>No devolvió data el fetch</p>'
-      }
-    })
-  }
-
-  let elem = document.getElementById('recipe_ingredients')
-  elem.addEventListener("input", debounce(searchFunction, 1000));
-  
-  //let addedIngredientsList = document.getElementById('added-ingredients-list')
-  //addedIngredientsList.addEventListener("click", debounce(addIngredientToList, 1000));
-
-  function searchFunction(){
-    let elem2 = document.getElementById('recipe_ingredients')
-    let searchQuery = elem2.value
-    let options = {
-      method: 'GET',      
-      headers: {}
-    };
-    let url = `/ingredients?by_q=${searchQuery}`
-    fetch(url, options)
-    .then(response => response.json())
-    .then(data => {
-      let list = document.getElementById('ingredients_list')
-      list.innerHTML = ""
-      if(data.length>0){
-        data.forEach(element => {
-          list.innerHTML += `<li onclick="addIngredientToList(this)" class="ingredient-element" data-id="${element[1]}">${element[0]}</li>`;
-        });
-      }
-      else{
-        list.innerHTML += '<p>No pudimos encontrar ese ingrediente</p><p onclick="addIngredientToDataBase()">¿Queres agregarlo a nuestra base de datos de ingredientes?</p>'
-      }
-    })
-  }
-
-
-  function debounce(fn, delay) {
-    var timeout;
-
-    return function () {
-        var context = this,
-            args = arguments;
-
-        clearTimeout(timeout);
-        timeout = setTimeout(function () {
-            fn.apply(context, args);
-        }, delay || 250);
-    };
-  }
-</script>

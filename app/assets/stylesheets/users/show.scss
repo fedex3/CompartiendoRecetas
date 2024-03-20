@@ -1,0 +1,91 @@
+@import 'theme';
+
+#profile{
+  .profile-container {
+    max-width: 800px;
+    margin: 20px auto;
+    padding: 20px;
+    //background-color: #fff;
+    border-radius: 5px;
+    box-shadow: 0 2px 5px rgba(0, 0, 0, 0.1);
+    display: flex;
+    flex-direction: row ;
+    justify-content: space-between;
+    .profile-picture img {
+        width: 100px;
+        height: 100px;
+        border-radius: 50%;
+        
+    }
+    .image-container {
+        position: relative;
+        display: inline-block;
+        margin-right: 20px;
+      }
+      
+      .image-overlay {
+        position: absolute;
+        top: 0;
+        left: 0;
+        width: 100%;
+        height: 100%;
+        background-color: rgba(0, 0, 0, 0.5); /* Semi-transparent black */
+        color: white;
+        font-size: 20px;
+        text-align: center;
+        line-height: 100px; /* Adjust this value to center the text vertically */
+        opacity: 0; /* Initially hidden */
+        transition: opacity 0.3s; /* Fade in/out effect */
+      }
+      
+      .image-container:hover .image-overlay {
+        opacity: 1; /* Show overlay on hover */
+      }
+  }
+
+
+
+  .profile-info {
+      display: flex;
+      align-items: center;
+      margin-bottom: 20px;
+      //background-color: aqua; //TEmporario
+  }
+
+  
+
+
+
+  .profile-bio{
+    //background-color: yellow; //TEmporario
+    p {
+        line-height: 1.5;
+    }
+  }
+
+
+    #profile-detail{
+        display: flex;
+        flex-direction: row;
+        //justify-content:  space-between;
+        align-items: center;
+        i{
+            margin-left: 2em;
+        }
+    }
+    #edit_profile_detail{
+        textarea{
+            background-color: black;
+            color: white;
+            border: none;
+        }
+    }
+}
+
+#user_recipes_show{
+    display: flex;
+    flex-direction: column;
+    h4{
+        margin: 0 auto;
+    }
+}

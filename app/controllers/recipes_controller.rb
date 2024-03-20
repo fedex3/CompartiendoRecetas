@@ -3,18 +3,17 @@ class RecipesController < ApplicationController
   require 'json'
 
   def index
-    @recipes = Recipe.all
+    @recipes = Recipe.all.order(created_at: :desc)
   end
 
   def mine
-    @recipes = current_user.recipes
+    @recipes = Recipe.all.order(created_at: :desc)
   end
 
   def show
     @recipe = Recipe.includes(:ingredients).find(params[:id])
     @user = User.find(@recipe.user_id)
     @allow_edit = @user == current_user ? true : false
-    puts @allow_edit
   end
 
   def new
@@ -22,12 +21,44 @@ class RecipesController < ApplicationController
     @ingredients = []
     @user = current_user
     @recipe = current_user.recipes.build
+    @tags = Tag.all
+  end
+
+  def create
+    #if recipe_params.ingredients.empty?
+    @tags = Tag.all
+    new_params = recipe_params.except(:ingredients,:ingredients_ids)
+    @recipe = Recipe.new(new_params)
+    @recipe.user_id = current_user.id
+    ingredients_ids_list = recipe_params[:ingredients_ids].to_s.split(',')
+    unless ingredients_ids_list.empty?
+      @ingredients = Ingredient.where(:id => ingredients_ids_list)
+      @recipe.ingredients << @ingredients
+      new_params[:ingredients] = @recipe.ingredients
+    else
+      puts "Esta receta no tiene ingredientes"
+    end
+    unless params[:tags].empty?
+      tags = Tag.where(:id => params[:tags])
+      @recipe.tags << tags
+      new_params[:tags] = @recipe.tags
+    else 
+      puts "Esta receta no tiene tags"
+    end
+
+  @recipe = current_user.recipes.build(new_params)
+
+    if @recipe.save
+      redirect_to @recipe
+    else
+      puts @recipe.errors.full_messages
+      render :new, status: :unprocessable_entity
+    end
   end
 
   def edit
     @recipe = Recipe.find(params[:id])
-    puts @recipe.inspect
-    puts @recipe.ingredients.inspect
+    @tags = Tag.all
   end
 
   def update
@@ -43,7 +74,13 @@ class RecipesController < ApplicationController
     else
       puts "Esta receta no tiene ingredientes"
     end
-
+    unless params[:tags].empty?
+      tags = Tag.where(:id => params[:tags])
+      @recipe.tags << tags
+      new_params[:tags] = @recipe.tags
+    else 
+      puts "Esta receta no tiene tags"
+    end
     if @recipe.update(new_params)
       flash[:success] = "Recipe updated!"
       redirect_to @recipe
@@ -97,41 +134,17 @@ class RecipesController < ApplicationController
   
   
 
-  def create
-    #if recipe_params.ingredients.empty?
-    new_params = recipe_params.except(:ingredients,:ingredients_ids)
-    @recipe = Recipe.new(new_params)
-    @recipe.user_id = current_user.id
-    ingredients_ids_list = recipe_params[:ingredients_ids].to_s.split(',')
-    unless ingredients_ids_list.empty?
-      @ingredients = Ingredient.where(:id => ingredients_ids_list)
-      @recipe.ingredients << @ingredients
-      new_params[:ingredients] = @recipe.ingredients
-    else
-      puts "Esta receta no tiene ingredientes"
-    end
-    
-    @recipe = current_user.recipes.build(new_params)
-    #if recipe_params
-    #@ingredients = Ingredient.where(:id => recipe_params[:ingredients])
-    #@recipe.ingredients << @ingredients
-
-    if @recipe.save
-      redirect_to @recipe
-    else
-      puts @recipe.errors.full_messages
-      render :new, status: :unprocessable_entity
-    end
-  end
-
 
   def destroy
+    @recipe = Recipe.find(params[:id])
     @recipe.destroy
+    redirect_to root_path, notice: "Receta eliminada correctamente"
   end
 
   private
     def recipe_params
-      params.require(:recipe).permit(:name, :detail, :cooking_time, :cooking_time_unit, :user_id, :image, :ingredients, :ingredients_ids, ingredients_attributes: [:id, :name, :_destroy])
+      params.require(:recipe).permit(:name, :detail, :cooking_time, :cooking_time_unit, :user_id, :image,
+      :ingredients, :tags, :ingredients_ids, ingredients_attributes: [:id, :name, :_destroy])
     end
 
     def recipes

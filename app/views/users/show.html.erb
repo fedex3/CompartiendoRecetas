@@ -1,0 +1,63 @@
+<%= javascript_include_tag 'profile', defer: true %>
+<section id="profile">
+  <div class="profile-container">
+
+    <div class="profile-info">
+      <div class="profile-picture">
+        
+        <%= form_with model: @user, url: edit_user_path, method: "patch", html:{id: "edit_profile_detail"}   do |form| %>
+          <div class="field">
+            <%= form.label :image do %>
+              <div class="image-container">
+                <% if @user.image.blank? %>
+                  <%= image_tag 'user-profile-placeholder-pic', class: "img-responsive add-photo-button", alt: "Agregar foto", size:"130x130" %>
+                <% else %>
+                  <%= image_tag @user.image, class: "img-responsive add-photo-button", alt: "Agregar foto", size:"130x130" %>
+                <% end %>
+                <div class="image-overlay">
+                  Editar
+                </div>
+              </div>
+            <% end %>
+            <%= form.file_field :image, style: "display: none;", onchange: "this.form.submit();" %>
+          </div>
+        <% end %>
+
+      </div>
+      <div class="profile-details">
+        <h1><%=@user.name%></h1>
+        <p>Usuario desde <%=@user.created_at.year%> </p>
+        <p>Recetas creadas: <%=@user.recipes.count%></p>
+        <% unless @user.tags.blank? %>
+          <%@user.tags.each do |tag|%>
+            <span><%=tag.name.downcase.capitalize()%></span>
+          <% end %>
+        <% end %>
+      </div>
+    </div>
+
+    <div class="profile-bio">
+      <div id="profile-detail-to-hide"> 
+        <h2>Sobre mi</h2>  
+        <div id="profile-detail">
+          <p><%= @user.detail%></p>
+          <i class="fa-solid fa-edit fa-05x squared-button" onclick="toggleVisibilityDetailEdit()"></i>
+        </div>
+      </div>
+
+      <%= form_with model: @user, url: edit_user_path, method: "patch", html:{style:"display: none;", id: "edit_profile_detail"}   do |form| %>
+        <div class="field">
+          <h2><%= form.label "Sobre mi" %></h2><br>
+          <%= form.text_area :detail, id: "user_detail_editor", placeholder:"Una pequeña descripción tuya" %>
+        </div>
+        <%= form.submit "Actualizar bio",  class:"button", data: { disable_with: "Actualizando bio" }%>
+        <button class="cancel-button" onclick="toggleVisibilityDetailEdit()">Cancelar</button>
+      <% end %>
+    </div>
+  </div>
+  <div id="user_recipes_show">
+    <h4>Recetas de <%=@user.name%></h4>
+    <%= render 'recipes/user_recipes', locals: {:recipes => @recipes} %>
+  </div>
+</section>
+

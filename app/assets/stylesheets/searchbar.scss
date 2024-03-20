@@ -1,0 +1,40 @@
+@import 'theme';
+/* Estilos para la search bar */
+.search-bar {
+  display: flex;
+  align-items: center;
+  width: 300px;
+  //border: 1px solid #ccc;
+  //border-radius: 5px;
+  padding: 5px;
+}
+
+.search-bar input[type="text"] {
+  flex: 1;
+  border: none;
+  outline: none;
+  padding: 0 10px;
+  font-size: 14px;
+  border-radius: 5px 0 0 5px;
+  height: 30.8333px;
+}
+
+.search-bar button {
+  background-color: $button-color;
+  //color: white;
+  border: none;
+  padding: 5px 10px;
+  border-radius: 0 5px 5px 0;
+  //margin-left: 5px;
+  cursor: pointer;
+  height: 30.8333px;
+}
+
+.search-bar button:hover {
+  transition: all .3s ease-in-out;
+  transform: translateY(0px);
+  background-color: $button-color-dark;
+  cursor: pointer;
+}
+
+
