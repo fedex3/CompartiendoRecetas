@@ -10,6 +10,10 @@ class RecipesController < ApplicationController
     @recipes = Recipe.all.order(created_at: :desc)
   end
 
+  def mine
+    @recipes = current_user.recipes
+  end
+
   def show
     @recipe = Recipe.includes(:ingredients).find(params[:id])
     @user = User.find(@recipe.user_id)
@@ -23,6 +27,8 @@ class RecipesController < ApplicationController
     @recipe = current_user.recipes.build
     @tags = Tag.all
   end
+  
+  
 
   def create
     #if recipe_params.ingredients.empty?
