@@ -5,19 +5,22 @@ section#recipes_index{
   justify-content: center;
   align-items: center;
   flex-direction: column;
+  text-align: justify;
   a{
     text-decoration: none;
     div.recipe_card{
+      max-height: 75vh;
       display: flex;
       justify-content: center;
       align-items: center;
       flex-direction: column;
-      width: 400px;
+      width: 700px;
       background-color: $my-gray-color;
       border: 1px solid rgb(87, 86, 86);
       border-radius: 5px;
       margin: 2em;
       color: white;
+      padding: .9em;
       img{
         padding: 5px;
       }
